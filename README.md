@@ -1,5 +1,5 @@
 # Virtual Shadower
-![Virtual Shadower](virtual_shadower_banner.jpg)
+![Virtual Shadower](https://i.ibb.co/BnhYt7d/virtual-shadower-banner.jpg)
 ---
 + Paper: [APSIPA ASC 2024](https://arxiv.org/abs/2410.02239), [AudioSample](https://secondtonumb.github.io/publication_demo/APSIPA_2024/index.html)
 ---
