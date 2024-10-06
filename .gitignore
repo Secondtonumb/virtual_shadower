@@ -146,3 +146,6 @@ icassp2024_exps/
 
 # yaml
 *.yaml
+*downloads
+*dump
+*data
