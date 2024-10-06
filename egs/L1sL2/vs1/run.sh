@@ -82,6 +82,16 @@ if [ ${stage} -le -1 ] && [ ${stop_stage} -ge -1 ]; then
     utils/hf_download.py --repo_id "unilight/seq2seq-vc" --outdir "downloads" --filename "s3prl-vc-ppg_sxliu/checkpoint-50000steps.pkl"
     utils/hf_download.py --repo_id "unilight/seq2seq-vc" --outdir "downloads" --filename "s3prl-vc-ppg_sxliu/config.yml"
     utils/hf_download.py --repo_id "unilight/seq2seq-vc" --outdir "downloads" --filename "s3prl-vc-ppg_sxliu/stats.h5"
+
+    # download Vocoder model
+    utils/hf_download.py --repo_id "Haopeng/V006_pretrained_models" --outdir "downloads" --filename "hifigan.16k_320/checkpoint-400000steps.pkl"
+    utils/hf_download.py --repo_id "Haopeng/V006_pretrained_models" --outdir "downloads" --filename "hifigan.16k_320/config.yml"
+    utils/hf_download.py --repo_id "Haopeng/V006_pretrained_models" --outdir "downloads" --filename "hifigan.16k_320/stats.h5"
+
+    # download PPG2Spec model
+    utils/hf_download.py --repo_id "Haopeng/V006_pretrained_models" --outdir "downloads" --filename "ppg_sxliu_decoder_V006/checkpoint-38000steps.pkl"
+    utils/hf_download.py --repo_id "Haopeng/V006_pretrained_models" --outdir "downloads" --filename "ppg_sxliu_decoder_V006/config.yml"
+    utils/hf_download.py --repo_id "Haopeng/V006_pretrained_models" --outdir "downloads" --filename "ppg_sxliu_decoder_V006/stats.h5"
 fi
 
 if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
