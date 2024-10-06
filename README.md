@@ -1,21 +1,34 @@
 # Virtual Shadower
 ![Virtual Shadower](https://i.ibb.co/BnhYt7d/virtual-shadower-banner.jpg)
+
 ---
-+ Paper: [APSIPA ASC 2024](https://arxiv.org/abs/2410.02239), [AudioSample](https://secondtonumb.github.io/publication_demo/APSIPA_2024/index.html)
+
+**Paper:**  
+- [APSIPA ASC 2024](https://arxiv.org/abs/2410.02239)  
+- [Audio Sample](https://secondtonumb.github.io/publication_demo/APSIPA_2024/index.html)
+
 ---
+
 ## Introduction
-We follow the concept of seq2seq-vc and foreign accent conversion to make a virtual shadowing system. Different from typical shadowing where the non-native speaker shadows the native utterances, we propose a virtual shadowing system where the native speaker shadows the non-native speaker (L1-shadowing-L2), serving as an intelligibility indicator for the non-native speaker.
+
+This project introduces a virtual shadowing system, inspired by seq2seq-vc and foreign accent conversion. Unlike traditional shadowing, where non-native speakers mimic native utterances, this system has native speakers shadow non-native speakers (L1-shadowing-L2). This approach serves as an intelligibility indicator for non-native speakers.
+
 ---
+
 ## Acknowledgements
-This repo is mostly inspired by and heritaged from following repos:
-+ [seq2seq-vc](https://github.com/unilight/seq2seq-vc) 
-+ [s3prl-vc](https://github.com/unilight/s3prl-vc)
-+ [ParallelWaveGan](https://github.com/kan-bayashi/ParallelWaveGAN/) especially the [HuBERT_unit_vocoder_hifigan_style](https://github.com/kan-bayashi/ParallelWaveGAN/tree/master/egs/vctk/hubert_voc1)
-+ [DiscreteSpeechMetrics](https://github.com/Takaaki-Saeki/DiscreteSpeechMetrics) For SpeechBERTScore
+
+This repository draws inspiration and resources from the following projects:
+
+- [seq2seq-vc](https://github.com/unilight/seq2seq-vc)  
+- [s3prl-vc](https://github.com/unilight/s3prl-vc)  
+- [ParallelWaveGan](https://github.com/kan-bayashi/ParallelWaveGAN/) (specifically, the [HuBERT_unit_vocoder_hifigan_style](https://github.com/kan-bayashi/ParallelWaveGAN/tree/master/egs/vctk/hubert_voc1))  
+- [DiscreteSpeechMetrics](https://github.com/Takaaki-Saeki/DiscreteSpeechMetrics) (for SpeechBERTScore)
+
 ---
 
 ## Citation
-```
+
+```bibtex
 @inprocessing{geng2024vs,
   title={A Pilot Study of Applying Sequence-to-Sequence Voice Conversion to Evaluate the Intelligibility of L2 Speech Using a Native Speaker's Shadowings},
   author={Geng, Haopeng and Saito, Daisuke and Nobuaki, Minematsu},
@@ -29,5 +42,3 @@ This repo is mostly inspired by and heritaged from following repos:
   booktitle={arXiv preprint arXiv:2409.11742},
   year={2024}
 }
-
-```
