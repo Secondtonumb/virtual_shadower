@@ -1,5 +1,5 @@
 # L1 shadowing L2
-
+![](https://raw.githubusercontent.com/Secondtonumb/publication_demo/refs/heads/main/ICASSP_2025/figure/VS_model.png)
 We follow the latent space conversion (LSC) method proposed by [Seq2seq/vc2/lsc](https://github.com/unilight/seq2seq-vc/tree/main/egs/l2-arctic/lsc), specifically.  
 We adapted the AAS-VC conversion to guarantee the alignment performance.
 
