@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 # Copyright 2023 Wen-Chin Huang (Nagoya University)
-#  MIT License (https://opensource.org/licenses/MIT)
+# Modified by 2024 Haopeng Geng (University of Tokyo)
+# MIT License (https://opensource.org/licenses/MIT)
 
 . ./path.sh || exit 1;
 . ./cmd.sh || exit 1;
@@ -300,13 +301,14 @@ if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ]; then
 
     [ -z "${checkpoint}" ] && checkpoint="$(ls -dt "${expdir}"/*.pkl | head -1 || true)"
     outdir="${expdir}/results/$(basename "${checkpoint}" .pkl)"
-    for _set in "dev" "eval"; do
+    for _set in "eval"; do
         name="${srcspk}_${_set}"
         echo "Evaluation start. See the progress via ${outdir}/${name}/evaluation.log."
         ${cuda_cmd} --gpu "${n_gpus}" "${outdir}/${name}/evaluation.log" \
-            local/evaluate.py \
+            local/evaluate_gavo.py \
                 --wavdir "${outdir}/${name}" \
-                --data_root "${db_root}/cmu_us_${trgspk}_arctic" \
+                --data_root "${db_root}/${trgspk}" \
+                --transcription "text" \
                 --trgspk ${trgspk} \
                 --f0_path "conf/f0.yaml" \
                 --segments "data/${trgspk}_${_set}/segments" \
@@ -315,57 +317,57 @@ if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ]; then
     done
 fi
 
-if [ "${stage}" -le 10 ] && [ "${stop_stage}" -ge 10 ]; then
-    echo "Stage 10: Generalization ability test"
-    # shellcheck disable=SC2012
-    [ -z "${checkpoint}" ] && checkpoint="$(ls -dt "${expdir}"/*.pkl | head -1 || true)"
-    outdir="${expdir}/results/$(basename "${checkpoint}" .pkl)"
-    pids=()
-    for _set in "dev" "eval"; do
-    (
-        if [ ${srcspk} == "clb" ]; then
-            name="bdl_${_set}"
-        elif [ ${srcspk} == "bdl" ]; then
-            name="clb_${_set}"
-        fi   
-        [ ! -e "${outdir}/${name}" ] && mkdir -p "${outdir}/${name}"
-        [ "${n_gpus}" -gt 1 ] && n_gpus=1
-        echo "Decoding start. See the progress via ${outdir}/${name}/decode.*.log."
-        CUDA_VISIBLE_DEVICES="" ${cuda_cmd} JOB=1:${n_jobs} --gpu 0 "${outdir}/${name}/decode.JOB.log" \
-            vc_decode.py \
-                --dumpdir "${dumpdir}/${name}/norm_${norm_name}/dump.JOB" \
-                --dp_input_dumpdir "${dumpdir}/${name}/norm_${norm_name}/dump.JOB" \
-                --checkpoint "${checkpoint}" \
-                --src-feat-type "${src_feat}" \
-                --trg-feat-type "${trg_feat}" \
-                --trg-stats "${expdir}/stats.${stats_ext}" \
-                --outdir "${outdir}/${name}/out.JOB" \
-                --verbose "${verbose}"
-        echo "Successfully finished decoding of ${name} set."
-    ) &
-    pids+=($!) # store background pids
-    done
-    i=0; for pid in "${pids[@]}"; do wait ${pid} || ((i++)); done
-    [ ${i} -gt 0 ] && echo "$0: ${i} background jobs are failed." && false
-    echo "Successfully finished decoding."
+# if [ "${stage}" -le 10 ] && [ "${stop_stage}" -ge 10 ]; then
+#     echo "Stage 10: Generalization ability test"
+#     # shellcheck disable=SC2012
+#     [ -z "${checkpoint}" ] && checkpoint="$(ls -dt "${expdir}"/*.pkl | head -1 || true)"
+#     outdir="${expdir}/results/$(basename "${checkpoint}" .pkl)"
+#     pids=()
+#     for _set in "dev" "eval"; do
+#     (
+#         if [ ${srcspk} == "clb" ]; then
+#             name="bdl_${_set}"
+#         elif [ ${srcspk} == "bdl" ]; then
+#             name="clb_${_set}"
+#         fi   
+#         [ ! -e "${outdir}/${name}" ] && mkdir -p "${outdir}/${name}"
+#         [ "${n_gpus}" -gt 1 ] && n_gpus=1
+#         echo "Decoding start. See the progress via ${outdir}/${name}/decode.*.log."
+#         CUDA_VISIBLE_DEVICES="" ${cuda_cmd} JOB=1:${n_jobs} --gpu 0 "${outdir}/${name}/decode.JOB.log" \
+#             vc_decode.py \
+#                 --dumpdir "${dumpdir}/${name}/norm_${norm_name}/dump.JOB" \
+#                 --dp_input_dumpdir "${dumpdir}/${name}/norm_${norm_name}/dump.JOB" \
+#                 --checkpoint "${checkpoint}" \
+#                 --src-feat-type "${src_feat}" \
+#                 --trg-feat-type "${trg_feat}" \
+#                 --trg-stats "${expdir}/stats.${stats_ext}" \
+#                 --outdir "${outdir}/${name}/out.JOB" \
+#                 --verbose "${verbose}"
+#         echo "Successfully finished decoding of ${name} set."
+#     ) &
+#     pids+=($!) # store background pids
+#     done
+#     i=0; for pid in "${pids[@]}"; do wait ${pid} || ((i++)); done
+#     [ ${i} -gt 0 ] && echo "$0: ${i} background jobs are failed." && false
+#     echo "Successfully finished decoding."
 
-    echo "Objective Evaluation"
-    [ -z "${checkpoint}" ] && checkpoint="$(ls -dt "${expdir}"/*.pkl | head -1 || true)"
-    outdir="${expdir}/results/$(basename "${checkpoint}" .pkl)"
-    for _set in "dev" "eval"; do
-        if [ ${srcspk} == "clb" ]; then
-            name="bdl_${_set}"
-        elif [ ${srcspk} == "bdl" ]; then
-            name="clb_${_set}"
-        fi   
-        echo "Evaluation start. See the progress via ${outdir}/${name}/evaluation.log."
-        ${cuda_cmd} --gpu "${n_gpus}" "${outdir}/${name}/evaluation.log" \
-            local/evaluate.py \
-                --wavdir "${outdir}/${name}" \
-                --data_root "${db_root}/cmu_us_${trgspk}_arctic" \
-                --trgspk ${trgspk} \
-                --f0_path "conf/f0.yaml" \
-                --segments "data/${trgspk}_${_set}/segments"
-        grep "Mean MCD" "${outdir}/${name}/evaluation.log"
-    done
-fi
+#     echo "Objective Evaluation"
+#     [ -z "${checkpoint}" ] && checkpoint="$(ls -dt "${expdir}"/*.pkl | head -1 || true)"
+#     outdir="${expdir}/results/$(basename "${checkpoint}" .pkl)"
+#     for _set in "dev" "eval"; do
+#         if [ ${srcspk} == "clb" ]; then
+#             name="bdl_${_set}"
+#         elif [ ${srcspk} == "bdl" ]; then
+#             name="clb_${_set}"
+#         fi   
+#         echo "Evaluation start. See the progress via ${outdir}/${name}/evaluation.log."
+#         ${cuda_cmd} --gpu "${n_gpus}" "${outdir}/${name}/evaluation.log" \
+#             local/evaluate.py \
+#                 --wavdir "${outdir}/${name}" \
+#                 --data_root "${db_root}/cmu_us_${trgspk}_arctic" \
+#                 --trgspk ${trgspk} \
+#                 --f0_path "conf/f0.yaml" \
+#                 --segments "data/${trgspk}_${_set}/segments"
+#         grep "Mean MCD" "${outdir}/${name}/evaluation.log"
+#     done
+# fi

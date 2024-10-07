@@ -13,6 +13,23 @@
 
 This project introduces a virtual shadowing system, inspired by seq2seq-vc and foreign accent conversion. Unlike traditional shadowing, where non-native speakers mimic native utterances, this system has native speakers shadow non-native speakers (L1-shadowing-L2). This approach serves as an intelligibility indicator for non-native speakers.
 
+## Installation
+
+### Editable installation with virtualenv   
+```bash
+git clone https://github.com/Secondtonumb/virtual_shadower
+cd virtual_shadower/tools
+make
+
+## If make fails, try the following (compile by stages):
+cd virtual_shadower/tools
+make virtualenv.done
+make pytorch.done
+make seq2seq-vc.done
+make s3prl-vc.done
+make monotonic_align
+make speechbertscore.done
+```
 ---
 
 ## Acknowledgements
