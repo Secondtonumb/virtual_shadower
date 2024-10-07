@@ -32,6 +32,12 @@ make speechbertscore.done
 ```
 ---
 
+### For reproduction of the APSIPA ASC 2024 paper:
+```bash
+cd egs/L1sL2/vs1
+```
+and follow the instructions in the README.md file.
+
 ## Acknowledgements
 
 This repository draws inspiration and resources from the following projects:
