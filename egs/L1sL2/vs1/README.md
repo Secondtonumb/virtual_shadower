@@ -23,7 +23,7 @@ norm_name='self'            # used to specify normalized data.
 src_feat=hubert             # source feature type, hubert, ppg_sxliu, or mel
 trg_feat=ppg_sxliu          # target feature type, hubert, ppg_sxliu, or mel
 dp_feat=hubert              # source feature type, hubert, ppg_sxliu
-feat_layer=9                # for hubert only, specify the layer to extract features from, if None, use the average of all layers
+feat_layer=9                # for hubert only, specify the layer to extract features from, 9th layer is selected following paper's implementation if None, use the average of all layers.
 ```
 
 ## Usage:
