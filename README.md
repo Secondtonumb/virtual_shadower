@@ -25,7 +25,7 @@ make
 cd virtual_shadower/tools
 make virtualenv.done
 make pytorch.done
-make seq2seq-vc.done
+make seq2seq_vc.done
 make s3prl-vc.done
 make monotonic_align
 make speechbertscore.done
