@@ -1,1 +1,78 @@
-../../vc1/conf/f0.yaml
+bdl:
+  f0min: 70
+  f0max: 210
+clb:
+  f0min: 110
+  f0max: 270
+rms:
+  f0min: 55
+  f0max: 200
+slt:
+  f0min: 120
+  f0max: 275
+
+# for gavo 
+B119004:
+  f0min: 70
+  f0max: 300
+V001_SS_B119004:
+  f0min: 150
+  f0max: 400
+
+V006_SS_max:
+  f0min: 50
+  f0max: 400
+V001_SS_max:
+  f0min: 50
+  f0max: 400
+
+V006_SS_B119004:
+  f0min: 70
+  f0max: 350
+V006_S1_B119004:
+  f0min: 70
+  f0max: 350
+V001_S1_B119004:
+  f0min: 150
+  f0max: 400
+
+V001:
+  f0min: 50
+  f0max: 400
+V002:
+  f0min: 50
+  f0max: 300
+V006:
+  f0min: 50
+  f0max: 300
+V000:
+  f0min: 50
+  f0max: 400
+
+seq2seq_mol_ppg2mel_vctk_libri_oneshotvc_r4_normMel_v2.yaml_B119004_V006_reading0002.wav:
+  f0min: 70
+  f0max: 300
+
+V001_S1_max_valid:
+  f0min: 100
+  f0max: 400
+
+V001_S1_max_valid:
+  f0min: 120
+  f0max: 400
+
+V001_SS_max_valid:
+  f0min: 120
+  f0max: 400
+
+V006_S1_max_valid:
+  f0min: 50
+  f0max: 350
+  
+V006_SS_max_valid:
+  f0min: 50
+  f0max: 350
+
+V000_R_max_valid:
+  f0min: 50
+  f0max: 450
